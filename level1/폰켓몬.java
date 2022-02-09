@@ -13,4 +13,9 @@ class Solution {
         else
         	return answer = nums.length/2;
     }
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        int[] nums = {3,3,3,4};
+        System.out.println(s.solution(nums));
+    }
 }

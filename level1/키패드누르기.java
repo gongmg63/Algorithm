@@ -1,40 +1,52 @@
 package level1;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 class Solution {
     public String solution(int[] numbers, String hand) {
         String answer = "";
-        ArrayList<Integer> leftkey = new ArrayList<Integer>(Arrays.asList(1,4,7,10));
-        ArrayList<Integer> rightkey = new ArrayList<Integer>(Arrays.asList(3,6,9,15));
-        ArrayList<Integer> centerkey = new ArrayList<Integer>(Arrays.asList(2,5,8,0));
-        int presentlefthand = 10;
-        int presentrighthand = 15;
-        for(int i=0; i < numbers.length; i++){
-            if(leftkey.contains(numbers[i])){
-                answer+="L";
-                presentlefthand = numbers[i];
+        int[] lefthand = {3,0};
+        int[] righthand = {3,2};
+        int[] input = {0,0};
+        for(int i = 0; i < numbers.length; i++){
+            if(numbers[i]==0)
+                numbers[i] = 11;
+        }
+        for(int i = 0; i < numbers.length; i++){
+            if(numbers[i] == 1 || numbers[i] == 4 || numbers[i] == 7){
+                answer += "L";
+                lefthand[0] = (numbers[i]-1)/3;
+                lefthand[1] = (numbers[i]-1)%3;
             }
-            else if(rightkey.contains(numbers[i])){
-                answer+="R";
-                presentrighthand = numbers[i];
+            else if(numbers[i] == 3 || numbers[i] == 6 || numbers[i] == 9){
+                answer += "R";
+                righthand[0] = (numbers[i]-1)/3;
+                righthand[1] = (numbers[i]-1)%3;
             }
             else{
-                if(i > 0){
-                    if(Math.abs(leftkey.indexOf(presentlefthand)-centerkey.indexOf(numbers[i])) > Math.abs(rightkey.indexOf(presentrighthand)-centerkey.indexOf(numbers[i]))){
-                        answer+="R";
-                        presentrighthand = numbers[i];
-                    }
-                    else if (Math.abs(leftkey.indexOf(presentlefthand)-centerkey.indexOf(numbers[i])) < Math.abs(rightkey.indexOf(presentrighthand)-centerkey.indexOf(numbers[i]))){
-                        answer+="L";
-                        presentlefthand = numbers[i];
-                    }
-                    else
-                        answer += String.valueOf(Character.toUpperCase(hand.charAt(0)));
+                input[0] = (numbers[i]-1)/3;
+                input[1] = (numbers[i]-1)%3;
+                int lcdif = Math.abs(input[0] - lefthand[0]) + Math.abs(input[1] - lefthand[1]);
+                int rcdif = Math.abs(input[0] - righthand[0]) + Math.abs(input[1] - righthand[1]);
+                if( lcdif > rcdif){
+                    answer += "R";
+                    righthand[0] = (numbers[i]-1)/3;
+                    righthand[1] = (numbers[i]-1)%3;
                 }
-                else
+                else if(lcdif < rcdif){
+                    answer += "L";
+                    lefthand[0] = (numbers[i]-1)/3;
+                    lefthand[1] = (numbers[i]-1)%3;
+                }
+                else{
                     answer += String.valueOf(Character.toUpperCase(hand.charAt(0)));
+                    if(String.valueOf(Character.toUpperCase(hand.charAt(0))).equals("L")){
+                        lefthand[0] = (numbers[i]-1)/3;
+                        lefthand[1] = (numbers[i]-1)%3;
+                    }
+                    else {
+                        righthand[0] = (numbers[i]-1)/3;
+                        righthand[1] = (numbers[i]-1)%3;
+                    }
+                }
             }
         }
         return answer;

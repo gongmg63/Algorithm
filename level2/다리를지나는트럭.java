@@ -1,32 +1,43 @@
 package level2;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        int answer = 1;
-        int truck_length = 1;
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(truck_weights[0]);
-        answer++;
-        weight -= truck_weights[0];
-        for(int i = 1; i < truck_weights.length; i++){
-            if(weight - truck_weights[i] >= 0 && truck_length<bridge_length){
+        int answer = 0;
+        int index = 0;
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0 ; i < bridge_length; i++)
+            q.add(0);
+        while(!q.isEmpty()){
+            if(weight >= truck_weights[index]){
                 answer++;
-                truck_length++;
-                queue.add(truck_weights[i]);
-                weight -= truck_weights[i];
+                weight += q.poll();
+                q.add(truck_weights[index]);
+                weight -= truck_weights[index];
+                index++;
             }
-            else if(weight - truck_weights[i] < 0 || truck_length==bridge_length ||i==truck_weights.length){
-                weight += queue.poll();
-                answer += bridge_length-truck_length;
-                answer++;
-                truck_length--;
+            else{
+                while(weight < truck_weights[index]){
+                    weight += q.poll();
+                    if(weight >= truck_weights[index]){
+                        q.add(truck_weights[index]);
+                    }
+                    else{
+                        q.add(0);
+                    }
+                    answer++;
+                }
+                weight -= truck_weights[index];
+                index++;
             }
-        }
-        while(!queue.isEmpty()){
-            answer++;
-            queue.poll();
+            if(index == truck_weights.length){
+                while(!q.isEmpty()){
+                    answer++;
+                    q.poll();
+                }
+            }
         }
         return answer;
     }

@@ -1,53 +1,25 @@
 package level2;
 
-import java.util.ArrayList;
-
 class Solution {
     public int solution(String name) {
-        ArrayList<Integer> updown = new ArrayList<>();
         int answer = 0;
-        int answerre = 0;
+        int move = name.length()-1;
         for(int i = 0; i < name.length(); i++){
-            updown.add((int)name.charAt(i) - 65);
-            if(updown.get(i)>13){
-                updown.remove(i);
-                updown.add(91-(int)name.charAt(i));
+            answer+=Math.min(name.charAt(i)-'A','Z'-name.charAt(i) + 1);
+            int index = i+1;
+            while(index < name.length() && name.charAt(index)=='A'){
+                index++;
             }
-            answer+=updown.get(i);
+            
+            move = Math.min(move,Math.min(i+i+name.length()-index,(name.length()-index)*2+i));
+            /*i+i+name.length()-index 는 A가 반복되는 구간인 i~index는 지나가지 않고 앞으로 갔다가
+            뒤로 가는 방법이다(name.lengh()-index는 뒤에서 A가 아닌 index까지의 거리를 나타냄)
+            (name.length()-index)*2+i 에서 (name.length()-index)*2는 
+            뒤로 갔다가 앞으로 가는 걸 나타내며 i+i와 의미가 같다. 
+            마지막에 더해주는 i는 마찬가지로 name.lengh()-index 와 의미가 같다. 
+            */
         }
-        answerre = answer;
-        int previous = 0;
-        for(int i = 0; i < updown.size(); i++){
-            if(updown.get(i)!=0){
-                int front =  i - previous;
-                int back = previous + updown.size() - i;
-                if(front > back){
-                    answer += back;
-                }
-                else{
-                    answer += front;
-                }
-                previous = i;
-            }
-        }
-        previous = updown.size()-1;
-        for(int i = updown.size()-1; i > 0; i--){
-            if(updown.get(i)!=0){
-                int front =  previous - i;
-                int back = updown.size()-previous + i;
-                if(front > back){
-                    answerre += back;
-                }
-                else{
-                    answerre += front;
-                }
-                previous = i;
-            }
-        }
-        if(answer < answerre+1)
-            return answer;
-        else
-            return answerre+1;
+        return answer+move;
     }
 }
 public class 조이스틱 {

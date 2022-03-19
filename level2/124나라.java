@@ -5,8 +5,10 @@ class Solution {
         String answer = "";
         StringBuilder sb = new StringBuilder();
         while(n > 3){
-            
+            sb.append(n%3);
+            n = n/3;
         }
+        
         return answer;
     }
 }

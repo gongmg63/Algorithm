@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main{
+public class 더하기싸이클{
 	
     public static void main(String[] args) {
     	Scanner sc = new Scanner(System.in);

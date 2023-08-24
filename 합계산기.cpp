@@ -23,9 +23,7 @@ int main() {
     cin >> n;
     for (int i = 0; i < n; ++i)
     {
-        cin >> left;
-        cin >> op;
-        cin >> right;
+        cin >> left >> op >> right;
         answer += cal(left, right, op);
     }
     cout << answer << "\n";

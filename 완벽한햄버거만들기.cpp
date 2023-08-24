@@ -9,8 +9,7 @@ int main() {
     bool asc = false;
     bool des = false;
 	
-    cin >> n;
-    cin >> material;
+    cin >> n >> material;
     answer += material;
     for (int i = 0; i < n - 1; ++i)
     {

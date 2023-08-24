@@ -21,9 +21,7 @@ int main() {
     int hour;
     int minute;
 
-    cin >> N;
-    cin >> T;
-    cin >> M;
+    cin >> N >> T >> M;
     for (int i = 0; i < N; ++i)
     {
         cin >> ci;

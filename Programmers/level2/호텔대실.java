@@ -3,7 +3,7 @@ package level2;
 import java.util.*;
 
 public class 호텔대실 {
-    static class Pair implements Comparable<Pair> {
+    class Pair implements Comparable<Pair> {
         public int start;
         public int end;
 

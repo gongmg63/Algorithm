@@ -60,7 +60,3 @@ int useStringStream(string dartResult) {
     }
     return 0;
 }
-
-int main() {
-    useStringStream("1S2D*3T");
-}
